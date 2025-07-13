@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colour Picker Gradient with Hex Values</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/templatemo-topic-listing.css" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/minecraftia" rel="stylesheet">
+    
+    
+    <style>
+    :root {
+      --bg-gradient-start: #667eea;
+      --bg-gradient-end: #764ba2;
+      --container-bg: rgba(255, 255, 255, 0.95);
+      --text-primary: #333;
+      --text-secondary: #666;
+      --card-bg: white;
+      --accent-bg: rgba(102, 126, 234, 0.1);
+      --accent-color: #667eea;
+      --success-color: #10b981;
+      --error-color: #ef4444;
+      --border-color: rgba(102, 126, 234, 0.1);
+      --shadow: rgba(0, 0, 0, 0.1);
+      --shadow-hover: rgba(102, 126, 234, 0.4);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient-start: #1a1a2e;
+      --bg-gradient-end: #16213e;
+      --container-bg: rgba(30, 30, 45, 0.95);
+      --text-primary: #e5e5e5;
+      --text-secondary: #a0a0a0;
+      --card-bg: #2a2a3e;
+      --accent-bg: rgba(102, 126, 234, 0.15);
+      --accent-color: #8b9dff;
+      --success-color: #34d399;
+      --error-color: #f87171;
+      --border-color: rgba(102, 126, 234, 0.2);
+      --shadow: rgba(0, 0, 0, 0.3);
+      --shadow-hover: rgba(102, 126, 234, 0.3);
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      min-height: 100vh;
+      color: var(--text-primary);
+    }
+
+
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      gap: 6px;
+      background: var(--accent-bg);
+      border-radius: 25px;
+      padding: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    .theme-btn {
+      background: none;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+    }
+
+    .theme-btn.active {
+      background: var(--accent-color);
+      color: white;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .theme-btn:hover:not(.active) {
+      color: var(--accent-color);
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      font-family: 'Minecraftia', sans-serif;
+      background: linear-gradient(45deg, var(--accent-color), var(--bg-gradient-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .controls {
+      margin-bottom: 30px;
+      background: var(--container-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+
+    .color-control {
+      display: inline-block;
+      margin: 10px;
+      vertical-align: top;
+    }
+
+    .color-control label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .color-inputs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .color-input {
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 14px;
+      width: 80px;
+      background: var(--card-bg);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .color-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    .invalid-color {
+      border-color: var(--error-color);
+      background-color: rgba(239, 68, 68, 0.1);
+    }
+
+    .color-picker {
+      width: 50px;
+      height: 40px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--card-bg);
+    }
+
+    .text-input {
+      margin: 10px;
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 14px;
+      width: 200px;
+      background: var(--card-bg);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .text-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+    #output {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: 1.2;
+      margin: 20px 0;
+    }
+
+    .output-container {
+      background: var(--container-bg);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+
+    .output-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .output-box h3 {
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      color: var(--text-primary);
+    }
+
+    .output-text {
+      background: var(--accent-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 15px;
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: var(--text-primary);
+    }
+
+    .copy-btn {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 12px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent-color);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--shadow-hover);
+    }
+
+    .letter-container {
+      display: inline-block;
+      margin: 0 5px;
+      text-align: center;
+      vertical-align: top;
+    }
+
+    .hex-display {
+      font-size: 12px;
+      font-weight: normal;
+      margin-bottom: 5px;
+      font-family: monospace;
+    }
+
+    .letter {
+      display: block;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+      margin-left: 10px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: var(--accent-color);
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(26px);
+    }
+
+    .color-control.disabled {
+      opacity: 0.5;
+    }
+
+    .color-control.disabled .color-picker,
+    .color-control.disabled .color-input {
+      pointer-events: none;
+    }
+    </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <ul class="navbar-nav ms-lg-5 me-lg-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
+          <ul class="dropdown-menu dropdown-menu-light">
+            <li><a class="dropdown-item" href="https://skyblock.net/members/silviaprincess.113197/">Silvia's Forums</a></li>
+            <li><a class="dropdown-item" href="https://skyblock.net/threads/time-fo-silvias-staff-applicaton.146244/">Staff application</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="./Survival_Trader.html">Survival Trader</a></li>
+        <li class="nav-item"><a class="nav-link" href="./Skyblock_accounts.html">Survial Accounts</a></li>
+      </ul>
+      <div class="theme-toggle">
+        <button class="theme-btn active" data-theme="light"><span>☀️</span> Light</button>
+        <button class="theme-btn" data-theme="dark"><span>🌙</span> Dark</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="controls">
+    <div class="color-control">
+      <label for="color1">Start Colour:</label>
+      <div class="color-inputs">
+        <input type="color" id="colorPicker1" value="#5BCEFA" class="color-picker">
+        <input type="text" id="color1" value="#5BCEFA" class="color-input" placeholder="#5BCEFA" pattern="^#[0-9a-fA-F]{6}$">
+      </div>
+    </div>
+    <div class="color-control">
+      <label for="color3">Mid Colour:</label>
+      <div class="color-inputs">
+        <input type="color" id="colorPicker3" value="#ffffff" class="color-picker">
+        <input type="text" id="color3" value="#ffffff" class="color-input" placeholder="#ffffff" pattern="^#[0-9a-fA-F]{6}$">
+      </div>
+    </div>
+    <div class="color-control">
+      <label for="color2">End Colour:</label>
+      <div class="color-inputs">
+        <input type="color" id="colorPicker2" value="#F5A9B8" class="color-picker">
+        <input type="text" id="color2" value="#F5A9B8" class="color-input" placeholder="#F5A9B8" pattern="^#[0-9a-fA-F]{6}$">
+        <label class="toggle-switch">
+          <input type="checkbox" id="endColourToggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="color-control">
+      <label for="textInput">Text:</label>
+      <input type="text" id="textInput" value="Your Text" class="text-input" placeholder="Your Text">
+    </div>
+  </div>
+
+  <div class="output-container">
+    <div id="output"></div>
+  </div>
+
+  <script>
+    // Theme toggle functionality
+    const themeButtons = document.querySelectorAll('.theme-btn');
+    const htmlElement = document.documentElement;
+
+    themeButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const theme = button.getAttribute('data-theme');
+        
+        // Update HTML data-theme attribute
+        htmlElement.setAttribute('data-theme', theme);
+        
+        // Update active button
+        themeButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        // Store theme preference
+        localStorage.setItem('theme', theme);
+      });
+    });
+
+    // Load saved theme on page load
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    themeButtons.forEach(btn => {
+      if (btn.getAttribute('data-theme') === savedTheme) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Colour picker functionality
+    const colorPicker1 = document.getElementById('colorPicker1');
+    const colorPicker2 = document.getElementById('colorPicker2');
+    const colorPicker3 = document.getElementById('colorPicker3');
+    const color1 = document.getElementById('color1');
+    const color2 = document.getElementById('color2');
+    const color3 = document.getElementById('color3');
+    const endColourToggle = document.getElementById('endColourToggle');
+    const textInput = document.getElementById('textInput');
+    const output = document.getElementById('output');
+
+    function hexToRgb(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
+
+    function rgbToHex(r, g, b) {
+      return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    }
+
+    function interpolateColor(color1, color2, factor) {
+      const c1 = hexToRgb(color1);
+      const c2 = hexToRgb(color2);
+
+      const r = Math.round(c1.r + (c2.r - c1.r) * factor);
+      const g = Math.round(c1.g + (c2.g - c1.g) * factor);
+      const b = Math.round(c1.b + (c2.b - c1.b) * factor);
+
+      return rgbToHex(r, g, b);
+    }
+
+    function formatHexWithAmpersands(hex) {
+      const hexWithoutHash = hex.substring(1);
+      const chars = hexWithoutHash.split('');
+      return '&x&' + chars.join('&');
+    }
+
+    function isValidHex(hex) {
+      return /^#[0-9a-fA-F]{6}$/.test(hex);
+    }
+
+    function validateColorInput(input) {
+      if (isValidHex(input.value)) {
+        input.classList.remove('invalid-color');
+        return true;
+      } else {
+        input.classList.add('invalid-color');
+        return false;
+      }
+    }
+
+    function syncColorPicker(textInput, colorPicker) {
+      if (isValidHex(textInput.value)) {
+        colorPicker.value = textInput.value;
+      }
+    }
+
+    function updateGradient() {
+      const color1Valid = validateColorInput(color1);
+      const color3Valid = validateColorInput(color3);
+      const color2Valid = validateColorInput(color2);
+      
+      if (!color1Valid || !color3Valid || (!color2Valid && endColourToggle.checked)) return;
+
+      const text = textInput.value || "Your Text";
+      const letters = text.split('');
+      const totalLetters = letters.length;
+
+      let visualHtml = '';
+      let outputString = '';
+
+      letters.forEach((letter, index) => {
+        const factor = index / (totalLetters - 1);
+        let interpolatedColor;
+        
+        if (endColourToggle.checked) {
+          // Three-colour gradient
+          if (factor < 0.5) {
+            interpolatedColor = interpolateColor(color1.value, color3.value, factor * 2);
+          } else {
+            interpolatedColor = interpolateColor(color3.value, color2.value, (factor - 0.5) * 2);
+          }
+        } else {
+          // Two-colour gradient (start to mid only)
+          interpolatedColor = interpolateColor(color1.value, color3.value, factor);
+        }
+
+        visualHtml += `<span style="color: ${interpolatedColor}; font-family: 'Minecraftia', monospace;">${letter}</span>`;
+        outputString += formatHexWithAmpersands(interpolatedColor) + letter;
+      });
+
+      output.innerHTML = `
+        <div style="margin-bottom: 30px;">
+          <div style="font-size: 48px; font-weight: bold; line-height: 1.2; margin: 20px 0;">${visualHtml}</div>
+        </div>
+        <div class="output-box">
+          <h3>Output:</h3>
+          <div class="output-text">${outputString}</div>
+          <button onclick="copyToClipboard('${outputString.replace(/'/g, "\'")}');" class="copy-btn">Copy to Clipboard</button>
+        </div>
+      `;
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard!');
+      });
+    }
+
+    function toggleEndColour() {
+      const endColourControl = document.querySelector('.color-control:nth-child(3)');
+      if (endColourToggle.checked) {
+        endColourControl.classList.remove('disabled');
+      } else {
+        endColourControl.classList.add('disabled');
+      }
+      updateGradient();
+    }
+
+    colorPicker1.addEventListener('input', function() {
+      color1.value = colorPicker1.value;
+      updateGradient();
+    });
+
+    colorPicker2.addEventListener('input', function() {
+      color2.value = colorPicker2.value;
+      updateGradient();
+    });
+
+    colorPicker3.addEventListener('input', function() {
+      color3.value = colorPicker3.value;
+      updateGradient();
+    });
+
+    color1.addEventListener('input', function() {
+      syncColorPicker(color1, colorPicker1);
+      updateGradient();
+    });
+
+    color2.addEventListener('input', function() {
+      syncColorPicker(color2, colorPicker2);
+      updateGradient();
+    });
+
+    color3.addEventListener('input', function() {
+      syncColorPicker(color3, colorPicker3);
+      updateGradient();
+    });
+
+    textInput.addEventListener('input', updateGradient);
+    endColourToggle.addEventListener('change', toggleEndColour);
+
+    updateGradient();
+  </script>
+</body>
+</html>
