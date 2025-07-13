@@ -175,8 +175,10 @@
   <div class="players-wrapper">
     <div class="header">
       <h1 class="title">Lothaine's Twitch Streamers</h1>
+      <p id="pageNumber"></p>
     </div>
     <div class="grid" id="grid-container"></div>
+    <div id="buttons-container"></div>
   </div>
 
   <script src="https://unpkg.com/skinview3d/bundles/skinview3d.bundle.js"></script>
@@ -198,17 +200,24 @@
     });
     initTheme();
 
-    const players = [
+    function splitArray(array, maxGroupSize) {
+      const result = [];
+      for (let i = 0; i < array.length; i += maxGroupSize) {
+        result.push(array.slice(i, i + maxGroupSize));
+      }
+      return result;
+    }
 
+    const players = [
       { username: "DBAKristina", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "ItzColt", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "Frostin0404", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
-      { username: "KittiRa", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "KittyRa", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "lothaine", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "RealSlimJay", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "shelbyl15", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "SkyCloud", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
-      { username: "TinyNTerrifyin", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "TinyNTerrifyin", pprefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "Toneztr", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "wildspaw", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "BadApril", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
@@ -218,56 +227,102 @@
       { username: "jcrgameing101", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "madelyn", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
       { username: "spyro_believer", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "SilviaPrincess", prefix: "[MapArtest]", color: "#ffffff", background: "#0E1114" },
     ];
+
+    function displayPage(array, pageNumber) {
+      array.forEach((player, index) => {
+        const container = document.createElement("div");
+        container.className = "player-card";
+        container.style.background = player.background;
+      
+        const label = document.createElement("div");
+        label.className = "player-name";
+        label.innerHTML = `<span style="color:${player.color}">${player.prefix} ${player.username}</span>`;
+
+        const canvas = document.createElement("canvas");
+        canvas.id = `canvas-${index}`;
+
+        const button = document.createElement("button");
+        button.className = "toggle-btn";
+        button.textContent = "▶️";
+
+        container.appendChild(label);
+        container.appendChild(canvas);
+        container.appendChild(button);
+        grid.appendChild(container);
+
+        const viewer = new skinview3d.SkinViewer({
+          canvas: canvas,
+          width: 150,
+          height: 200,
+          skin: `${repoBase}${player.username}`
+        });
+
+        viewer.controls.enableZoom = false;
+        viewer.controls.enableRotate = true;
+
+        const animation = new skinview3d.WalkingAnimation();
+        animation.speed = .6;
+        animation.paused = true;
+        viewer.animation = animation;
+
+        button.addEventListener("click", () => {
+          animation.paused = !animation.paused;
+          button.textContent = animation.paused ? "▶️" : "⏸️";
+        });
+      });
+    }
+
+    splitPlayers = splitArray(players, 15);
+
     const repoBase = "https://visage.surgeplay.com/skin/";
     const grid = document.getElementById("grid-container");
+    const buttons = document.getElementById("buttons-container");
 
-    players.forEach((player, index) => {
-      const container = document.createElement("div");
-      container.className = "player-card";
-      container.style.background = player.background;
-      
+    const pageNumber = document.getElementById("pageNumber");
+    let Page = 0;
+    pageNumber.textContent = `Page ${Page + 1} of ${splitPlayers.length}`;
 
+    const nextPageButton = document.createElement("button");
+    nextPageButton.textContent = "Next Page";
 
+    const prevPageButton = document.createElement("button");
+    prevPageButton.textContent = "Previous Page";
 
-      const label = document.createElement("div");
-      label.className = "player-name";
-      label.innerHTML = `<span style="color:${player.color}">${player.prefix} ${player.username}</span>`;
+    buttons.appendChild(prevPageButton);
+    buttons.appendChild(nextPageButton);
 
-      const canvas = document.createElement("canvas");
-      canvas.id = `canvas-${index}`;
-
-      const button = document.createElement("button");
-      button.className = "toggle-btn";
-      button.textContent = "▶️";
-
-      container.appendChild(label);
-      container.appendChild(canvas);
-      container.appendChild(button);
-      grid.appendChild(container);
-
-
-
-      const viewer = new skinview3d.SkinViewer({
-        canvas: canvas,
-        width: 150,
-        height: 200,
-        skin: `${repoBase}${player.username}`
+    nextPageButton.addEventListener('click', () => {
+      if (Page >= splitPlayers.length - 1) {
+        return; // No more pages to display
+      }
+      // empty grid
+      let cards = document.getElementsByClassName("player-card");
+      Array.from(cards).forEach(card => {
+        grid.removeChild(card);
       });
+      Page += 1;
+      pageNumber.textContent = `Page ${Page + 1} of ${splitPlayers.length}`;
+      displayPage(splitPlayers[Page], Page);
+    })
 
-      viewer.controls.enableZoom = false;
-      viewer.controls.enableRotate = true;
-
-      const animation = new skinview3d.WalkingAnimation();
-      animation.speed = .6;
-      animation.paused = true;
-      viewer.animation = animation;
-
-      button.addEventListener("click", () => {
-        animation.paused = !animation.paused;
-        button.textContent = animation.paused ? "▶️" : "⏸️";
+    prevPageButton.addEventListener('click', () => {
+      if (Page <= 0) {
+        return; // No previous page to display
+      }
+      // empty grid
+      let cards = document.getElementsByClassName("player-card");
+      Array.from(cards).forEach(card => {
+        grid.removeChild(card);
       });
-    });
+      Page -= 1;
+      pageNumber.textContent = `Page ${Page + 1} of ${splitPlayers.length}`;
+      displayPage(splitPlayers[Page], Page);
+    })
+
+    displayPage(splitPlayers[Page], Page);
+
   </script>
 </body>
 </html>
