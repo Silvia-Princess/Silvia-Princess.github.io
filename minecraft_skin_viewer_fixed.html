@@ -199,26 +199,25 @@
     initTheme();
 
     const players = [
-      { username: "Notch", prefix: "[Skytitan]", color: "#00AAAA", background: "#0E1114" },
-      { username: "jeb_", prefix: "[Skytitan]", color: "#00AAAA", background: "#0E1114" },
-      { username: "DBAKristina", prefix: "[Skytitan]", color: "#00AAAA", background: "#0E1114" },
-      { username: "ItzColt", prefix: "[Skytitan]", color: "#00AAAA", background: "#0E1114" },
-      { username: "Frostin0404", prefix: "[Skylord]", color: "#FF55FF", background: "#0E1114" },
-      { username: "KittyRa", prefix: "[Skygod]", color: "#55FFFF", background: "#0E1114" },
-      { username: "lothaine", prefix: "[Skyking]", color: "#FFAA00", background: "#0E1114" },
-      { username: "RealSlimJay", prefix: "[Skygod]", color: "#55FFFF", background: "#0E1114" },
-      { username: "shelbyl15", prefix: "[Skygod]", color: "#55FFFF", background: "#0E1114" },
-      { username: "SkyCloud", prefix: "[Skygod]", color: "#55FFFF", background: "#0E1114" },
-      { username: "TinyNTerrifyin", prefix: "[Skyknight]", color: "#FFFF55", background: "#0E1114" },
-      { username: "Toneztr", prefix: "", color: "#55FF55", background: "#0E1114" },
-      { username: "wildspaw", prefix: "[Skyking]", color: "#FFAA00", background: "#0E1114" },
-      { username: "BadApril", prefix: "[Skygod]", color: "#55FFFF", background: "#0E1114" },
-      { username: "Tito42Ox", prefix: "[Skygod]", color: "#55FFFF", background: "#0E1114" },
-      { username: "nyradee", prefix: "[Skygod]", color: "#55FFFF", background: "#0E1114" },
-      { username: "itzbuckshot", prefix: "[Skyknight]", color: "#FFFF55", background: "#0E1114" },
-      { username: "jcrgameing101", prefix: "", color: "#55FF55", background: "#0E1114" },
-      { username: "madelyn", prefix: "[Skyknight]", color: "#FFFF55", background: "#0E1114" },
-      { username: "spyro_believer", prefix: "", color: "#55FF55", background: "#0E1114" },
+
+      { username: "DBAKristina", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "ItzColt", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "Frostin0404", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "KittiRa", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "lothaine", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "RealSlimJay", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "shelbyl15", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "SkyCloud", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "TinyNTerrifyin", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "Toneztr", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "wildspaw", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "BadApril", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "Tito42Ox", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "nyradee", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "itzbuckshot", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "jcrgameing101", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "madelyn", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
+      { username: "spyro_believer", prefix: "[Streamer]", color: "#ffffff", background: "#0E1114" },
     ];
     const repoBase = "https://visage.surgeplay.com/skin/";
     const grid = document.getElementById("grid-container");
@@ -229,9 +228,7 @@
       container.style.background = player.background;
       
 
-      if (index === 0 || index === 1) {
-        container.classList.add("hidden");
-      }
+
 
       const label = document.createElement("div");
       label.className = "player-name";
@@ -249,10 +246,7 @@
       container.appendChild(button);
       grid.appendChild(container);
 
-      // Skip creating viewer for hidden players
-      if (index === 0 || index === 1) {
-        return;
-      }
+
 
       const viewer = new skinview3d.SkinViewer({
         canvas: canvas,
