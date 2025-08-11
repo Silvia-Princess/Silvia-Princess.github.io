@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads - Silvia Princess</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Light theme (default) */
+            :root {
+      --bg-gradient-start: #667eea;
+      --bg-gradient-end: #764ba2;
+      --container-bg: rgba(255, 255, 255, 0.95);
+      --text-primary: #333;
+      --text-secondary: #666;
+      --card-bg: white;
+      --accent-bg: rgba(102, 126, 234, 0.1);
+      --accent-color: #667eea;
+      --success-color: #10b981;
+      --error-color: #ef4444;
+      --border-color: rgba(102, 126, 234, 0.1);
+      --shadow: rgba(0, 0, 0, 0.1);
+      --shadow-hover: rgba(102, 126, 234, 0.4);
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient-start: #1a1a2e;
+      --bg-gradient-end: #16213e;
+      --container-bg: rgba(30, 30, 45, 0.95);
+      --text-primary: #e5e5e5;
+      --text-secondary: #a0a0a0;
+      --card-bg: #2a2a3e;
+      --accent-bg: rgba(102, 126, 234, 0.15);
+      --accent-color: #8b9dff;
+      --success-color: #34d399;
+      --error-color: #f87171;
+      --border-color: rgba(102, 126, 234, 0.2);
+      --shadow: rgba(0, 0, 0, 0.3);
+      --shadow-hover: rgba(102, 126, 234, 0.3);
+    }
+
+        /* Navigation */
+        .navbar {
+            background-color: var(--nav-bg);
+            border-bottom: 1px solid var(--nav-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+        }
+
+        .nav-links a:hover {
+            background-color: var(--secondary-bg);
+        }
+
+        .theme-toggle {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .theme-btn {
+            background: none;
+            border: 1px solid var(--nav-border);
+            color: var(--text-color);
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .theme-btn:hover {
+            background-color: var(--secondary-bg);
+        }
+
+        .theme-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .download-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px var(--shadow);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .card-title {
+            font-size: 1.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .card-version {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .card-description {
+            color: var(--text-color);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .preview-section {
+            background-color: var(--secondary-bg);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .preview-placeholder {
+            background-color: var(--card-border);
+            height: 200px;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            opacity: 0.6;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .features {
+            margin-bottom: 2rem;
+        }
+
+        .features h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .features ul {
+            list-style: none;
+        }
+
+        .features li {
+            padding: 0.5rem 0;
+            color: var(--text-color);
+            opacity: 0.8;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .features li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            position: absolute;
+            left: 0;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .download-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .download-info {
+            font-size: 0.875rem;
+            color: var(--text-color);
+            opacity: 0.6;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-color);
+            opacity: 0.6;
+        }
+
+        .installation {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px var(--shadow);
+            margin-top: 2rem;
+        }
+
+        .installation h3 {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .install-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .install-step {
+            background-color: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .install-step h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .install-step ol {
+            color: var(--text-color);
+            opacity: 0.8;
+            padding-left: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .install-step li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="/">Pages</a></li>
+                <li><a href="/forums">Silvia's Forums</a></li>
+                <li><a href="/staff-application">Staff application</a></li>
+                <li><a href="/economy-trader">Economy Trader</a></li>
+                <li><a href="/Skyblock_Trader.html">Skyblock Accounts</a></li>
+                <li><a href="/downloads.html" style="color: var(--primary-color); font-weight: 600;">Downloads</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <button class="theme-btn active" id="light-btn">☀️ Light</button>
+                <button class="theme-btn" id="dark-btn">🌙 Dark</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <header class="page-header">
+            <h1 class="page-title">Downloads</h1>
+            <p class="page-subtitle">Get the latest texture packs and mods by Silvia Princess</p>
+        </header>
+
+        <div class="downloads-grid">
+            <!-- Texture Pack Card -->
+            <div class="download-card">
+                <div class="card-header">
+                    <h2 class="card-title">🎨 Princess Texture Pack</h2>
+                    <span class="card-version">v2.1.0</span>
+                    <p class="card-description">
+                        A beautiful, high-resolution texture pack that transforms your Minecraft world with elegant 
+                        princess-themed textures. Features stunning castle blocks, magical items, and enchanting environments.
+                    </p>
+                </div>
+
+                <div class="preview-section">
+                    <div class="preview-placeholder">
+                        🖼️ Preview Screenshots Coming Soon
+                    </div>
+                    <small>Screenshots showcase the beautiful textures in-game</small>
+                </div>
+
+                <div class="features">
+                    <h4>✨ Features:</h4>
+                    <ul>
+                        <li>High-resolution 64x64 textures</li>
+                        <li>Princess-themed blocks and items</li>
+                        <li>Compatible with Minecraft 1.20+</li>
+                        <li>Optimized for performance</li>
+                        <li>Regular updates and new content</li>
+                    </ul>
+                </div>
+
+                <div class="download-section">
+                    <a href="#" class="download-btn">
+                        📥 Download Texture Pack
+                    </a>
+                    <div class="download-info">
+                        File size: ~15MB | .zip format
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">5.2K</div>
+                        <div class="stat-label">Downloads</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4.8</div>
+                        <div class="stat-label">★ Rating</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">1.20+</div>
+                        <div class="stat-label">MC Version</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mod Card -->
+            <div class="download-card">
+                <div class="card-header">
+                    <h2 class="card-title">⚙️ Princess Mod</h2>
+                    <span class="card-version">v1.5.3</span>
+                    <p class="card-description">
+                        An amazing mod that adds new gameplay mechanics, magical items, and princess-themed content 
+                        to your Minecraft experience. Includes new biomes, creatures, and enchantments.
+                    </p>
+                </div>
+
+                <div class="preview-section">
+                    <div class="preview-placeholder">
+                        🎮 Mod Screenshots Coming Soon
+                    </div>
+                    <small>See the new content and features in action</small>
+                </div>
+
+                <div class="features">
+                    <h4>🔮 Features:</h4>
+                    <ul>
+                        <li>New magical items and weapons</li>
+                        <li>Princess castle structures</li>
+                        <li>Custom enchantments</li>
+                        <li>New mobs and creatures</li>
+                        <li>Forge & Fabric support</li>
+                    </ul>
+                </div>
+
+                <div class="download-section">
+                    <a href="#" class="download-btn">
+                        📥 Download Mod
+                    </a>
+                    <div class="download-info">
+                        File size: ~8MB | .jar format
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">3.1K</div>
+                        <div class="stat-label">Downloads</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label">★ Rating</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">1.20+</div>
+                        <div class="stat-label">MC Version</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Installation Instructions -->
+        <div class="installation">
+            <h3>📋 Installation Instructions</h3>
+            <div class="install-steps">
+                <div class="install-step">
+                    <h4>🎨 Texture Pack Installation</h4>
+                    <ol>
+                        <li>Download the texture pack .zip file</li>
+                        <li>Open Minecraft and go to Options → Resource Packs</li>
+                        <li>Click "Open Pack Folder"</li>
+                        <li>Copy the downloaded .zip file into this folder</li>
+                        <li>Return to Minecraft and activate the pack</li>
+                    </ol>
+                </div>
+                
+                <div class="install-step">
+                    <h4>⚙️ Mod Installation</h4>
+                    <ol>
+                        <li>Install Minecraft Forge or Fabric</li>
+                        <li>Download the mod .jar file</li>
+                        <li>Open Minecraft folder and go to "mods" directory</li>
+                        <li>Copy the .jar file into the mods folder</li>
+                        <li>Launch Minecraft with the modded profile</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const lightBtn = document.getElementById('light-btn');
+        const darkBtn = document.getElementById('dark-btn');
+        const body = document.body;
+
+        // Load saved theme or default to light
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            lightBtn.classList.remove('active');
+            darkBtn.classList.add('active');
+        }
+
+        lightBtn.addEventListener('click', () => {
+            body.removeAttribute('data-theme');
+            lightBtn.classList.add('active');
+            darkBtn.classList.remove('active');
+            localStorage.setItem('theme', 'light');
+        });
+
+        darkBtn.addEventListener('click', () => {
+            body.setAttribute('data-theme', 'dark');
+            lightBtn.classList.remove('active');
+            darkBtn.classList.add('active');
+            localStorage.setItem('theme', 'dark');
+        });
+
+        // Download button functionality
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Create notification
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background-color: var(--primary-color);
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 0.5rem;
+                    z-index: 1000;
+                    box-shadow: 0 4px 12px var(--shadow);
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease;
+                `;
+                notification.textContent = 'Download link will be available soon!';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => document.body.removeChild(notification), 300);
+                }, 3000);
+            });
+        });
+
+        // Animate counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                const numericTarget = parseFloat(target.replace(/[^\d.]/g, ''));
+                
+                if (!isNaN(numericTarget)) {
+                    let current = 0;
+                    const increment = numericTarget / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= numericTarget) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            const suffix = target.includes('K') ? 'K' : target.includes('★') ? '★' : target.includes('+') ? '+' : '';
+                            counter.textContent = Math.floor(current * 10) / 10 + suffix;
+                        }
+                    }, 30);
+                }
+            });
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            setTimeout(animateCounters, 500);
+        });
+    </script>
+</body>
+</html>
