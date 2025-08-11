@@ -426,205 +426,284 @@
   </nav>
 
 
-    <div class="container">
-        <div class="header">
+<main class="container">
+        <section class="hero">
+            <h1>Downloads Hub</h1>
+            <p>Discover and download premium resources, tools, and assets. Everything you need to enhance your experience.</p>
+        </section>
 
-            <h1 class="title">Economy Trader is Selling</h1>
-            <p class="subtitle"></p>
-        </div>
-
-        <div class="status-bar">
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span>Live Updates</span>
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search downloads..." id="searchInput">
+                <div class="search-icon">🔍</div>
             </div>
-            <div class="last-updated" id="lastUpdated">Loading...</div>
-            <button class="refresh-btn" onclick="fetchTraders()">Refresh Now</button>
+        </section>
+
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">All</button>
+            <button class="filter-btn" data-category="tools">Tools</button>
+            <button class="filter-btn" data-category="plugins">Plugins</button>
+            <button class="filter-btn" data-category="resources">Resources</button>
+            <button class="filter-btn" data-category="templates">Templates</button>
+            <button class="filter-btn" data-category="scripts">Scripts</button>
         </div>
 
-        <div id="content">
-            <div class="loading">
-                <div class="spinner"></div>
-                Loading trader data...
+        <div class="stats-section">
+            <div class="stat-item">
+                <h3 id="totalDownloads">12,547</h3>
+                <p>Total Downloads</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="totalFiles">156</h3>
+                <p>Available Files</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="activeUsers">2,341</h3>
+                <p>Active Users</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="newToday">23</h3>
+                <p>New Today</p>
             </div>
         </div>
-    </div>
+
+        <div class="downloads-grid" id="downloadsGrid">
+            <!-- Downloads will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Silvia's Hub. All rights reserved. Built with ❤️ for the community.</p>
+        </div>
+    </footer>
 
     <script>
-        let updateInterval;
-        let tradersData = [];
-
-        // Theme management
-        function initTheme() {
-            const savedTheme = localStorage.getItem('skyblock-theme') || 'light';
-            setTheme(savedTheme);
-        }
-
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('skyblock-theme', theme);
-            
-            // Update active button
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.theme === theme);
-            });
-        }
-
-        // Theme toggle event listeners
-        document.querySelectorAll('.theme-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                setTheme(btn.dataset.theme);
-            });
-        });
-
-        function formatTimestamp(timestamp) {
-            if (!timestamp) return 'Never';
-            const date = new Date(timestamp * 1000);
-            return date.toLocaleString();
-        }
-
-        function formatLastUpdated() {
-            const now = new Date();
-            return `Last updated: ${now.toLocaleTimeString()}`;
-        }
-
-        function formatItemName(itemName) {
-            return itemName.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
-        }
-        
-        function getMinecraftItemImage(itemName) {
-            // Convert item name to lowercase for the API
-            const apiItemName = itemName.toLowerCase();
-            return `https://minecraft-api.vercel.app/images/items/${apiItemName}.png`;
-        }
-
-        function renderTraders(traderData) {
-            const content = document.getElementById('content');
-            
-            if (!traderData || !traderData.active) {
-                content.innerHTML = '<div class="error">No active traders found or API unavailable</div>';
-                return;
+        const downloads = [
+            {
+                id: 1,
+                title: "Skyblock Economy Plugin",
+                description: "Advanced economy management plugin with trading features, auction house, and player shops. Perfect for Skyblock servers.",
+                category: "plugins",
+                size: "2.4 MB",
+                downloads: 3241,
+                version: "v2.1.3",
+                icon: "🔌",
+                featured: true
+            },
+            {
+                id: 2,
+                title: "Server Resource Pack",
+                description: "High-quality texture pack with custom items, blocks, and UI elements designed specifically for our server ecosystem.",
+                category: "resources",
+                size: "45.2 MB",
+                downloads: 8765,
+                version: "v1.8.0",
+                icon: "🎨",
+                featured: true
+            },
+            {
+                id: 3,
+                title: "Auto-Trader Bot",
+                description: "Intelligent trading bot that monitors market prices and executes optimal trades automatically. Supports multiple currencies.",
+                category: "tools",
+                size: "1.8 MB",
+                downloads: 2103,
+                version: "v3.0.1",
+                icon: "🤖",
+                featured: false
+            },
+            {
+                id: 4,
+                title: "Forum Template Pack",
+                description: "Modern, responsive forum templates with dark/light themes. Includes user profiles, post layouts, and admin panels.",
+                category: "templates",
+                size: "12.7 MB",
+                downloads: 1542,
+                version: "v1.2.0",
+                icon: "📄",
+                featured: false
+            },
+            {
+                id: 5,
+                title: "Data Mining Scripts",
+                description: "Python scripts for analyzing server data, player statistics, and economy trends. Includes visualization tools.",
+                category: "scripts",
+                size: "3.6 MB",
+                downloads: 892,
+                version: "v2.3.4",
+                icon: "📊",
+                featured: false
+            },
+            {
+                id: 6,
+                title: "Custom GUI Creator",
+                description: "Drag-and-drop GUI builder for Minecraft plugins. Create beautiful interfaces with ease. No coding required.",
+                category: "tools",
+                size: "15.3 MB",
+                downloads: 4521,
+                version: "v1.9.2",
+                icon: "🎛️",
+                featured: true
+            },
+            {
+                id: 7,
+                title: "Staff Management Plugin",
+                description: "Complete staff management system with permissions, logging, and moderation tools. Perfect for large communities.",
+                category: "plugins",
+                size: "4.1 MB",
+                downloads: 2876,
+                version: "v1.7.1",
+                icon: "👮",
+                featured: false
+            },
+            {
+                id: 8,
+                title: "Website Theme Bundle",
+                description: "Collection of modern website themes with responsive design, animations, and customizable components.",
+                category: "templates",
+                size: "28.9 MB",
+                downloads: 1923,
+                version: "v2.0.0",
+                icon: "🌐",
+                featured: false
             }
+        ];
 
-const buyableTrades = (traderData.buyable || []).sort((a, b) => b.value - a.value);
-const sellableTrades = (traderData.sellable || []).sort((a, b) => b.value - a.value);
-            
-            const traderHtml = `
-                <div class="trader-card">
-                    
+        let filteredDownloads = [...downloads];
+        let currentFilter = 'all';
 
-
-                       
-
-
-                    ${buyableTrades.length > 0 ? `
-                        <div class="trades-section">
-                            <div class="section-title">
-                                Economy Trader is Selling
-                            </div>
-                            <div class="trades-container">
-                                ${buyableTrades.map(trade => `
-                                    <div class="trade-item">
-                                        <img src="${getMinecraftItemImage(trade.item)}" 
-                                             alt="${formatItemName(trade.item)}" 
-                                             class="item-image"
-                                             onerror="this.onerror=null; this.src='https://i.imgur.com/E6eMr7p.png';">
-                                        <div class="trade-details">
-                                            <div class="trade-description">${formatItemName(trade.item)}</div>
-                                            <div class="trade-limits">Max: ${trade.maximumAmount} | Per Player: ${trade.maximumAmountPerPlayer}</div>
-                                        </div>
-                                        <span class="trade-amount">${trade.value} Coins</span>
-                                    </div>
-                                `).join('')}
+        function renderDownloads(downloadsToRender = filteredDownloads) {
+            const grid = document.getElementById('downloadsGrid');
+            grid.innerHTML = downloadsToRender.map(download => `
+                <div class="download-card ${download.featured ? 'pulse' : ''}" data-category="${download.category}">
+                    <div class="card-header">
+                        <div class="file-icon">${download.icon}</div>
+                        <div>
+                            <h3 class="card-title">${download.title}</h3>
+                            <div class="card-meta">
+                                <span>${download.size}</span>
+                                <span>•</span>
+                                <span>${download.version}</span>
+                                ${download.featured ? '<span style="color: var(--accent);">• Featured</span>' : ''}
                             </div>
                         </div>
-                    ` : ''}
-
-                    ${sellableTrades.length > 0 ? `
-                        <div class="trades-section">
-                            <div class="section-title">
-                                Trader is Buying
-                            </div>
-                            <div class="trades-container">
-                                ${sellableTrades.map(trade => `
-                                    <div class="trade-item selling">
-                                        <img src="${getMinecraftItemImage(trade.item)}" 
-                                             alt="${formatItemName(trade.item)}" 
-                                             class="item-image"
-                                             onerror="this.onerror=null; this.src='https://i.imgur.com/E6eMr7p.png';">
-                                        <div class="trade-details">
-                                            <div class="trade-description">${formatItemName(trade.item)}</div>
-                                            <div class="trade-limits">Max: ${trade.maximumAmount} | Per Player: ${trade.maximumAmountPerPlayer}</div>
-                                        </div>
-                                        <span class="trade-amount selling">${trade.value} Coins</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    ` : ''}
-
-                    ${buyableTrades.length === 0 && sellableTrades.length === 0 ? `
-                        <div class="trades-section">
-                            <div style="text-align: center; color: var(--text-secondary); font-style: italic;">
-                                No active trades
-                            </div>
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-
-            content.innerHTML = `<div class="traders-grid">${traderHtml}</div>`;
-        }
-
-        async function fetchTraders() {
-            try {
-                const response = await fetch('https://api.skyblock.net/traders?server=economy');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                tradersData = data;
-                
-                renderTraders(tradersData);
-                document.getElementById('lastUpdated').textContent = formatLastUpdated();
-                
-            } catch (error) {
-                console.error('Error fetching traders:', error);
-                document.getElementById('content').innerHTML = `
-                    <div class="error">
-                        Failed to load trader data. Please check your connection and try again.
-                        <br><small>Error: ${error.message}</small>
                     </div>
-                `;
-            }
+                    <p class="card-description">${download.description}</p>
+                    <div class="card-footer">
+                        <button class="download-btn" onclick="downloadFile(${download.id})">
+                            ⬇️ Download
+                        </button>
+                        <div class="download-count">${download.downloads.toLocaleString()} downloads</div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function startAutoUpdate() {
-            // Clear any existing interval
-            if (updateInterval) {
-                clearInterval(updateInterval);
-            }
+        function filterDownloads(category) {
+            currentFilter = category;
             
-            // Update every 30 seconds
-            updateInterval = setInterval(fetchTraders, 30000);
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+
+            // Filter downloads
+            filteredDownloads = category === 'all' ? 
+                [...downloads] : 
+                downloads.filter(download => download.category === category);
+                
+            renderDownloads(filteredDownloads);
         }
 
-        // Initialize theme on page load
-        initTheme();
+        function searchDownloads(query) {
+            const searchTerm = query.toLowerCase();
+            const searchResults = filteredDownloads.filter(download =>
+                download.title.toLowerCase().includes(searchTerm) ||
+                download.description.toLowerCase().includes(searchTerm)
+            );
+            renderDownloads(searchResults);
+        }
 
-        // Initial load
-        fetchTraders();
-        startAutoUpdate();
-
-        // Update when page becomes visible again
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                fetchTraders();
-                startAutoUpdate();
+        function downloadFile(id) {
+            const download = downloads.find(d => d.id === id);
+            if (download) {
+                // Simulate download
+                alert(`Downloading ${download.title}...`);
+                
+                // Update download count
+                download.downloads += 1;
+                renderDownloads(filteredDownloads);
+                
+                // Update stats
+                updateStats();
             }
+        }
+
+        function updateStats() {
+            const totalDownloads = downloads.reduce((sum, d) => sum + d.downloads, 0);
+            document.getElementById('totalDownloads').textContent = totalDownloads.toLocaleString();
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            
+            body.style.filter = body.style.filter === 'invert(1) hue-rotate(180deg)' ? '' : 'invert(1) hue-rotate(180deg)';
+            icon.textContent = icon.textContent === '🌙' ? '☀️' : '🌙';
+            text.textContent = text.textContent === 'Dark' ? 'Light' : 'Dark';
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchDownloads(e.target.value);
         });
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterDownloads(btn.dataset.category);
+            });
+        });
+
+        // Animate stats on load
+        function animateStats() {
+            const stats = [
+                { id: 'totalDownloads', target: 12547 },
+                { id: 'totalFiles', target: 156 },
+                { id: 'activeUsers', target: 2341 },
+                { id: 'newToday', target: 23 }
+            ];
+
+            stats.forEach(stat => {
+                let current = 0;
+                const increment = stat.target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= stat.target) {
+                        current = stat.target;
+                        clearInterval(timer);
+                    }
+                    document.getElementById(stat.id).textContent = Math.floor(current).toLocaleString();
+                }, 50);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDownloads();
+            setTimeout(animateStats, 500);
+        });
+
+        // Add some dynamic effects
+        setInterval(() => {
+            const newToday = document.getElementById('newToday');
+            const currentValue = parseInt(newToday.textContent);
+            if (Math.random() < 0.1) { // 10% chance
+                newToday.textContent = currentValue + 1;
+            }
+        }, 10000);
     </script>
 </body>
 </html>
