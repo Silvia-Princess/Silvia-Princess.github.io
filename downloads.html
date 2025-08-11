@@ -17,114 +17,90 @@
 
     <title>Economy Traders Dashboard</title>
     <style>
-        :root {
-            /* Light mode colors */
-            --bg-gradient-start: #667eea;
-            --bg-gradient-end: #764ba2;
-            --container-bg: rgba(255, 255, 255, 0.95);
-            --text-primary: #333;
-            --text-secondary: #666;
-            --card-bg: white;
-            --accent-bg: rgba(102, 126, 234, 0.1);
-            --accent-color: #667eea;
-            --success-color: #10b981;
-            --error-color: #ef4444;
-            --border-color: rgba(102, 126, 234, 0.1);
-            --shadow: rgba(0, 0, 0, 0.1);
-            --shadow-hover: rgba(102, 126, 234, 0.4);
-            --trade-bg-buy: rgba(16, 185, 129, 0.1);
-            --trade-bg-sell: rgba(239, 68, 68, 0.1);
-            --trade-amount-bg-buy: rgba(16, 185, 129, 0.2);
-            --trade-amount-bg-sell: rgba(239, 68, 68, 0.2);
-        }
 
-        [data-theme="dark"] {
-            /* Dark mode colors */
-            --bg-gradient-start: #1a1a2e;
-            --bg-gradient-end: #16213e;
-            --container-bg: rgba(30, 30, 45, 0.95);
-            --text-primary: #e5e5e5;
-            --text-secondary: #a0a0a0;
-            --card-bg: #2a2a3e;
-            --accent-bg: rgba(102, 126, 234, 0.15);
-            --accent-color: #8b9dff;
-            --success-color: #34d399;
-            --error-color: #f87171;
-            --border-color: rgba(102, 126, 234, 0.2);
-            --shadow: rgba(0, 0, 0, 0.3);
-            --shadow-hover: rgba(102, 126, 234, 0.3);
-            --trade-bg-buy: rgba(52, 211, 153, 0.15);
-            --trade-bg-sell: rgba(248, 113, 113, 0.15);
-            --trade-amount-bg-buy: rgba(52, 211, 153, 0.25);
-            --trade-amount-bg-sell: rgba(248, 113, 113, 0.25);
-        }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+              :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --bg-dark: #0f0f23;
+            --bg-card: #1a1a2e;
+            --bg-card-hover: #232347;
+            --text-primary: #ffffff;
+            --text-secondary: #a8a8b3;
+            --border: #2d2d44;
+            --accent: #00d4aa;
+            --shadow: rgba(99, 102, 241, 0.3);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1a2e 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
             min-height: 100vh;
-            padding: 20px;
-            transition: all 0.3s ease;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: var(--container-bg);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px var(--shadow);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            padding: 0 20px;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 30px;
-            position: relative;
+            background: rgba(26, 26, 46, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
         }
 
         .theme-toggle {
-            position: absolute;
-            top: 0;
-            right: 0;
-            display: flex;
-            background: var(--accent-bg);
-            border-radius: 25px;
-            padding: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        .theme-btn {
-            background: none;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 0.5rem;
         }
-
-        .theme-btn.active {
-            background: var(--accent-color);
-            color: white;
-            box-shadow: 0 2px 8px var(--shadow);
-        }
-
-        .theme-btn:hover:not(.active) {
-            color: var(--accent-color);
-        }
-
         .title {
             font-size: 2.5rem;
             font-weight: 700;
