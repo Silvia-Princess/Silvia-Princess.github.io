@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colour Picker Gradient with Hex Values</title>
@@ -91,18 +88,11 @@
       box-shadow: 0 2px 8px var(--shadow);
     }
 
-    .theme-btn:hover:not(.active) {
-      color: var(--accent-color);
-    }
 
-    .title {
-      font-size: 2.5rem;
-      font-weight: bold;
-      font-family: 'Minecraftia', sans-serif;
-      background: linear-gradient(45deg, var(--accent-color), var(--bg-gradient-end));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+
+
+
+
 
     .controls {
       margin-bottom: 30px;
@@ -131,8 +121,7 @@
       align-items: center;
       gap: 10px;
     }
-
-    .color-input {
+.color-input {
       padding: 8px 12px;
       border: 1px solid var(--border-color);
       border-radius: 6px;
@@ -143,6 +132,32 @@
       color: var(--text-primary);
       transition: all 0.3s ease;
     }
+
+    .text-input,
+    .number-input {
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 14px;
+      width: 120px;
+      background: var(--card-bg);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+
+   
+
+    .color-input:focus,
+    .text-input:focus,
+    .number-input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    }
+
+
 
     .color-input:focus {
       outline: none;
@@ -224,100 +239,16 @@
       color: var(--text-primary);
     }
 
-    .copy-btn {
-      background: var(--accent-color);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      margin-top: 12px;
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
 
-    .copy-btn:hover {
-      background: var(--accent-color);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px var(--shadow-hover);
-    }
 
-    .letter-container {
-      display: inline-block;
-      margin: 0 5px;
-      text-align: center;
-      vertical-align: top;
-    }
 
-    .hex-display {
-      font-size: 12px;
-      font-weight: normal;
-      margin-bottom: 5px;
-      font-family: monospace;
-    }
 
-    .letter {
-      display: block;
-    }
 
-    .toggle-switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 24px;
-      margin-left: 10px;
-    }
 
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .toggle-slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 24px;
-    }
-
-    .toggle-slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
-
-    input:checked + .toggle-slider {
-      background-color: var(--accent-color);
-    }
-
-    input:checked + .toggle-slider:before {
-      transform: translateX(26px);
-    }
-
-    .color-control.disabled {
-      opacity: 0.5;
-    }
-
-    .color-control.disabled .color-picker,
-    .color-control.disabled .color-input {
-      pointer-events: none;
-    }
-    </style>
+  </style>
 </head>
-<body>
+
+    <body>
 
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
@@ -344,30 +275,36 @@
       <label for="color1">Start Colour:</label>
       <div class="color-inputs">
         <input type="color" id="colorPicker1" value="#5BCEFA" class="color-picker">
-        <input type="text" id="color1" value="#5BCEFA" class="color-input" placeholder="#5BCEFA" pattern="^#[0-9a-fA-F]{6}$">
+        <input type="text" id="color1" value="#5BCEFA" class="color-input">
       </div>
     </div>
+
     <div class="color-control">
       <label for="color3">Mid Colour:</label>
       <div class="color-inputs">
         <input type="color" id="colorPicker3" value="#ffffff" class="color-picker">
-        <input type="text" id="color3" value="#ffffff" class="color-input" placeholder="#ffffff" pattern="^#[0-9a-fA-F]{6}$">
+        <input type="text" id="color3" value="#ffffff" class="color-input">
       </div>
     </div>
+
     <div class="color-control">
       <label for="color2">End Colour:</label>
       <div class="color-inputs">
         <input type="color" id="colorPicker2" value="#F5A9B8" class="color-picker">
-        <input type="text" id="color2" value="#F5A9B8" class="color-input" placeholder="#F5A9B8" pattern="^#[0-9a-fA-F]{6}$">
-        <label class="toggle-switch">
-          <input type="checkbox" id="endColourToggle" checked>
-          <span class="toggle-slider"></span>
-        </label>
+        <input type="text" id="color2" value="#F5A9B8" class="color-input">
       </div>
     </div>
+
+
+    
     <div class="color-control">
       <label for="textInput">Text:</label>
       <input type="text" id="textInput" value="Your Text" class="text-input" placeholder="Your Text">
+    </div>
+
+    <div class="color-control">
+      <label for="lettersPerChange">Letters per colour change:</label>
+      <input type="number" id="lettersPerChange" value="1" min="1" class="number-input" placeholder="1">
     </div>
   </div>
 
@@ -376,193 +313,85 @@
   </div>
 
   <script>
-    // Theme toggle functionality
+    // theme toggle
     const themeButtons = document.querySelectorAll('.theme-btn');
-    const htmlElement = document.documentElement;
-
-    themeButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const theme = button.getAttribute('data-theme');
-        
-        // Update HTML data-theme attribute
-        htmlElement.setAttribute('data-theme', theme);
-        
-        // Update active button
-        themeButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        
-        // Store theme preference
-        localStorage.setItem('theme', theme);
-      });
+    const html = document.documentElement;
+    themeButtons.forEach(btn => btn.addEventListener('click', () => {
+      const theme = btn.getAttribute('data-theme');
+      html.setAttribute('data-theme', theme);
+      themeButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      localStorage.setItem('theme', theme);
+    }));
+    const saved = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', saved);
+    themeButtons.forEach(b => {
+      if (b.getAttribute('data-theme') === saved) b.classList.add('active');
     });
 
-    // Load saved theme on page load
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    htmlElement.setAttribute('data-theme', savedTheme);
-    themeButtons.forEach(btn => {
-      if (btn.getAttribute('data-theme') === savedTheme) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-
-    // Colour picker functionality
-    const colorPicker1 = document.getElementById('colorPicker1');
-    const colorPicker2 = document.getElementById('colorPicker2');
-    const colorPicker3 = document.getElementById('colorPicker3');
+    // main logic
     const color1 = document.getElementById('color1');
     const color2 = document.getElementById('color2');
     const color3 = document.getElementById('color3');
-    const endColourToggle = document.getElementById('endColourToggle');
+    const colorPicker1 = document.getElementById('colorPicker1');
+    const colorPicker2 = document.getElementById('colorPicker2');
+    const colorPicker3 = document.getElementById('colorPicker3');
     const textInput = document.getElementById('textInput');
+    const lettersPerChangeInput = document.getElementById('lettersPerChange');
     const output = document.getElementById('output');
 
     function hexToRgb(hex) {
-      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-      } : null;
+      const res = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return res ? { r: parseInt(res[1],16), g: parseInt(res[2],16), b: parseInt(res[3],16) } : null;
     }
-
-    function rgbToHex(r, g, b) {
-      return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    function rgbToHex(r,g,b) { return "#" + ((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1); }
+    function interpolateColor(a,b,f) {
+      const c1=hexToRgb(a),c2=hexToRgb(b);
+      const r=Math.round(c1.r+(c2.r-c1.r)*f);
+      const g=Math.round(c1.g+(c2.g-c1.g)*f);
+      const bl=Math.round(c1.b+(c2.b-c1.b)*f);
+      return rgbToHex(r,g,bl);
     }
-
-    function interpolateColor(color1, color2, factor) {
-      const c1 = hexToRgb(color1);
-      const c2 = hexToRgb(color2);
-
-      const r = Math.round(c1.r + (c2.r - c1.r) * factor);
-      const g = Math.round(c1.g + (c2.g - c1.g) * factor);
-      const b = Math.round(c1.b + (c2.b - c1.b) * factor);
-
-      return rgbToHex(r, g, b);
-    }
-
-    function formatHexWithAmpersands(hex) {
-      const hexWithoutHash = hex.substring(1);
-      const chars = hexWithoutHash.split('');
-      return '&x&' + chars.join('&');
-    }
-
-    function isValidHex(hex) {
-      return /^#[0-9a-fA-F]{6}$/.test(hex);
-    }
-
-    function validateColorInput(input) {
-      if (isValidHex(input.value)) {
-        input.classList.remove('invalid-color');
-        return true;
-      } else {
-        input.classList.add('invalid-color');
-        return false;
-      }
-    }
-
-    function syncColorPicker(textInput, colorPicker) {
-      if (isValidHex(textInput.value)) {
-        colorPicker.value = textInput.value;
-      }
+    function formatHexWithAmpersands(h) {
+      const hex=h.substring(1);
+      return '&x&' + hex.split('').join('&');
     }
 
     function updateGradient() {
-      const color1Valid = validateColorInput(color1);
-      const color3Valid = validateColorInput(color3);
-      const color2Valid = validateColorInput(color2);
-      
-      if (!color1Valid || !color3Valid || (!color2Valid && endColourToggle.checked)) return;
-
       const text = textInput.value || "Your Text";
+      const per = parseInt(lettersPerChangeInput.value) || 1;
       const letters = text.split('');
-      const totalLetters = letters.length;
+      let visual = '', out = '';
+      const total = Math.ceil(letters.length / per);
 
-      let visualHtml = '';
-      let outputString = '';
+      for (let s = 0; s < total; s++) {
+        const seg = letters.slice(s * per, s * per + per).join('');
+        const f = total === 1 ? 0 : s / (total - 1);
+        const color = f < 0.5
+          ? interpolateColor(color1.value, color3.value, f * 2)
+          : interpolateColor(color3.value, color2.value, (f - 0.5) * 2);
 
-      letters.forEach((letter, index) => {
-        const factor = index / (totalLetters - 1);
-        let interpolatedColor;
-        
-        if (endColourToggle.checked) {
-          // Three-colour gradient
-          if (factor < 0.5) {
-            interpolatedColor = interpolateColor(color1.value, color3.value, factor * 2);
-          } else {
-            interpolatedColor = interpolateColor(color3.value, color2.value, (factor - 0.5) * 2);
-          }
-        } else {
-          // Two-colour gradient (start to mid only)
-          interpolatedColor = interpolateColor(color1.value, color3.value, factor);
-        }
-
-        visualHtml += `<span style="color: ${interpolatedColor}; font-family: 'Minecraftia', monospace;">${letter}</span>`;
-        outputString += formatHexWithAmpersands(interpolatedColor) + letter;
-      });
+        visual += `<span style="color:${color}; font-family:'Minecraftia',monospace;">${seg}</span>`;
+        out += formatHexWithAmpersands(color) + seg;
+      }
 
       output.innerHTML = `
-        <div style="margin-bottom: 30px;">
-          <div style="font-size: 48px; font-weight: bold; line-height: 1.2; margin: 20px 0;">${visualHtml}</div>
+        <div style="margin-bottom:30px;">
+          <div style="font-size:48px; font-weight:bold; line-height:1.2; margin:20px 0;">${visual}</div>
         </div>
         <div class="output-box">
           <h3>Output:</h3>
-          <div class="output-text">${outputString}</div>
-          <button onclick="copyToClipboard('${outputString.replace(/'/g, "\'")}');" class="copy-btn">Copy to Clipboard</button>
-        </div>
-      `;
+          <div class="output-text">${out}</div>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('${out.replace(/'/g, "\\'")}'); alert('Copied to clipboard!')">Copy to Clipboard</button>
+        </div>`;
     }
 
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Copied to clipboard!');
-      });
-    }
+    [color1,color2,color3,colorPicker1,colorPicker2,colorPicker3,textInput,lettersPerChangeInput]
+      .forEach(el => el.addEventListener('input', updateGradient));
 
-    function toggleEndColour() {
-      const endColourControl = document.querySelector('.color-control:nth-child(3)');
-      if (endColourToggle.checked) {
-        endColourControl.classList.remove('disabled');
-      } else {
-        endColourControl.classList.add('disabled');
-      }
-      updateGradient();
-    }
-
-    colorPicker1.addEventListener('input', function() {
-      color1.value = colorPicker1.value;
-      updateGradient();
-    });
-
-    colorPicker2.addEventListener('input', function() {
-      color2.value = colorPicker2.value;
-      updateGradient();
-    });
-
-    colorPicker3.addEventListener('input', function() {
-      color3.value = colorPicker3.value;
-      updateGradient();
-    });
-
-    color1.addEventListener('input', function() {
-      syncColorPicker(color1, colorPicker1);
-      updateGradient();
-    });
-
-    color2.addEventListener('input', function() {
-      syncColorPicker(color2, colorPicker2);
-      updateGradient();
-    });
-
-    color3.addEventListener('input', function() {
-      syncColorPicker(color3, colorPicker3);
-      updateGradient();
-    });
-
-    textInput.addEventListener('input', updateGradient);
-    endColourToggle.addEventListener('change', toggleEndColour);
-
+    colorPicker1.addEventListener('input', ()=> color1.value = colorPicker1.value);
+    colorPicker2.addEventListener('input', ()=> color2.value = colorPicker2.value);
+    colorPicker3.addEventListener('input', ()=> color3.value = colorPicker3.value);
     updateGradient();
   </script>
 </body>
